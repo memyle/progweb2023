@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Poll App</title>
+</head>
+<body>
+  <h1>Create a Poll</h1>
+  <form id="pollForm">
+    <label for="pollTitle">Poll Title:</label>
+    <input type="text" id="pollTitle" required>
+    <br>
+    <label for="gameSearch">Search for a Game:</label>
+    <input type="text" id="gameSearch" placeholder="Search for a game" autocomplete="off">
+    <div id="searchResults"></div>
+    <ul id="suggestedGames"></ul>
+    <button type="submit">Create Poll</button>
+  </form>
+
+  <h1>Polls</h1>
+  <ul id="polls"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
