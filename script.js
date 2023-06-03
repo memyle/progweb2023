@@ -1,7 +1,5 @@
-// IGDB API Configuration
 const apiBaseUrl = "https://api.igdb.com/v4";
 
-// Polls Data
 let polls = [];
 
 function signIn() {
@@ -21,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function(e) {
   signIn();
 })
 
-// Search Games using IGDB API
 function searchGames(searchTerm) {
   const searchEndpoint = `${apiBaseUrl}/games`;
   const searchParams = {
@@ -46,7 +43,6 @@ function searchGames(searchTerm) {
     });
 }
 
-// Add Suggested Game to the Poll
 function addSuggestedGame(gameId, gameName) {
   const suggestedGamesList = document.getElementById("suggestedGames");
   const li = document.createElement("li");
@@ -55,7 +51,6 @@ function addSuggestedGame(gameId, gameName) {
   suggestedGamesList.appendChild(li);
 }
 
-// Handle Game Search
 function handleGameSearch(event) {
   const searchTerm = event.target.value;
   const searchResults = document.getElementById("searchResults");
@@ -81,7 +76,6 @@ function handleGameSearch(event) {
     });
 }
 
-// Create Poll
 function createPoll(event) {
   event.preventDefault();
 
@@ -102,19 +96,15 @@ function createPoll(event) {
     })),
   };
 
-  // Clear form fields
   document.getElementById("pollForm").reset();
   document.getElementById("searchResults").innerHTML = "";
   suggestedGamesList.innerHTML = "";
 
-  // Add poll to the polls array
   polls.push(poll);
 
-  // Display the polls
   displayPolls();
 }
 
-// Vote on a Poll
 function voteOnPoll(event) {
   const pollId = event.target.dataset.pollId;
   const gameId = event.target.dataset.gameId;
@@ -130,7 +120,6 @@ function voteOnPoll(event) {
   });
 }
 
-// Display Polls
 function displayPolls() {
   const pollsList = document.getElementById("polls");
   pollsList.innerHTML = "";
@@ -142,7 +131,6 @@ function displayPolls() {
   });
 }
 
-// Event Listeners
 document.getElementById("gameSearch").addEventListener("input", handleGameSearch);
 document.getElementById("pollForm").addEventListener("submit", createPoll);
 document.getElementById("polls").addEventListener("click", voteOnPoll);
