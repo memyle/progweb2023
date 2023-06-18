@@ -1,48 +1,91 @@
-const apiBaseUrl = "https://api.igdb.com/v4";
+const CLIENT_ID = 'sexr9olej3av3g770l91o1whk8yvzr';
+const CLIENT_SECRET = 'zlf1h9hb3xlztey29pwf8van2widd6';
+const AUTH_URL = 'https://id.twitch.tv/oauth2/authorize';
+const IGDB_API_URL = 'https://api.igdb.com/v4/games';
+const TWITCH_REDIRECT_URI = 'http://localhost:8080'; // Replace with your redirect URI
 
 let polls = [];
 
-function signIn() {
-  const signInParams = {
-    client_id: 'sexr9olej3av3g770l91o1whk8yvzr',
-    client_secret: 'zlf1h9hb3xlztey29pwf8van2widd6',
-    grant_type: 'client_credentials'
+// Twitch Authentication
+function twitchLogin() {
+  const params = new URLSearchParams({
+    client_id: CLIENT_ID,
+    redirect_uri: TWITCH_REDIRECT_URI,
+    response_type: 'token',
+    scope: 'user:read:email',
+  });
+
+  window.location.href = `${AUTH_URL}?${params}`;
+}
+
+function checkAccessToken() {
+  const { access_token } = parseHashParams();
+  if (access_token) {
+    localStorage.setItem('access_token', access_token);
+    showContent();
+  }
+}
+
+function parseHashParams() {
+  const hashParams = {};
+  const hash = window.location.hash.substring(1);
+  const params = hash.split('&');
+
+  for (let param of params) {
+    const [key, value] = param.split('=');
+    hashParams[key] = decodeURIComponent(value);
   }
 
-  fetch('https://id.twitch.tv/oauth2/token', {
-    method: "POST",
-    body: JSON.stringify(signInParams),
-  })
+  return hashParams;
 }
 
-document.addEventListener("DOMContentLoaded", function(e) {
-  signIn();
-})
+async function searchGames(searchTerm) {
+  const response = await fetch(IGDB_API_URL, {
+    method: 'POST',
+    headers: {
+      'Client-ID': CLIENT_ID,
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    body: 'fields name, cover.url; limit 10; sort popularity desc;',
+  });
 
-function searchGames(searchTerm) {
-  const searchEndpoint = `${apiBaseUrl}/games`;
-  const searchParams = {
-    search: searchTerm,
-    fields: "name",
-    limit: 5,
-  };
-  const headers = {
-    "Client-ID": 'sexr9olej3av3g770l91o1whk8yvzr',
-    Authorization: `Bearer zlf1h9hb3xlztey29pwf8van2widd6`,
-  };
+  const data = await response.json();
 
-  return fetch(searchEndpoint, {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(searchParams),
-  })
-    .then((response) => response.json())
-    .then((games) => games)
-    .catch((error) => {
-      console.log("Error searching games:", error);
-    });
+  if (data.error) {
+    console.error('Error fetching games:', data.error);
+    return;
+  }
+
+  const gamesList = document.getElementById('games-list');
+  gamesList.innerHTML = '';
+
+  data.forEach(game => {
+    const li = document.createElement('li');
+    const img = document.createElement('img');
+    const name = document.createElement('p');
+
+    img.src = `https:${game.cover.url.replace('t_thumb', 't_cover_big')}`;
+    img.alt = game.name;
+    name.textContent = game.name;
+
+    li.appendChild(img);
+    li.appendChild(name);
+    gamesList.appendChild(li);
+  });
 }
 
+function showContent() {
+  const loginContainer = document.getElementById('login-container');
+  const contentContainer = document.getElementById('content-container');
+
+  loginContainer.style.display = 'none';
+  contentContainer.style.display = 'block';
+
+  fetchPopularGames();
+}
+
+
+// TODO Needs Work
 function addSuggestedGame(gameId, gameName) {
   const suggestedGamesList = document.getElementById("suggestedGames");
   const li = document.createElement("li");
@@ -134,3 +177,6 @@ function displayPolls() {
 document.getElementById("gameSearch").addEventListener("input", handleGameSearch);
 document.getElementById("pollForm").addEventListener("submit", createPoll);
 document.getElementById("polls").addEventListener("click", voteOnPoll);
+
+document.getElementById('login-button').addEventListener('click', twitchLogin);
+window.addEventListener('load', checkAccessToken);
