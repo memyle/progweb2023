@@ -8,15 +8,28 @@ export const usePollStore = defineStore('poll', {
     polls: []
   }),
   getters: {
-    getPools: (state) => state.polls,
+    getPools: (state) => {
+      console.log(state.polls)
+      return state.polls
+    },
     getNewPoll: (state) => state.newPoll,
   },
   actions: {
-    addToListInNew() {
-      this.newPoll.items.push({ id: 10, text: 'Dale' })
+    updateNewTitle(event) {
+      this.newPoll.title = event.target.value
     },
-    addToList() {
-      this.polls[0].items.push({ id: 10, text: 'Dale' })
+    updateItemTitle(event) {
+      console.log(event)
+      let index = this.newPoll.items.indexOf(item)
+      this.newPoll.items[index].text = event.target.value
+    },
+    addCreatePoll() {
+      console.log(this.newPoll)
+      this.polls.push(this.newPoll)
+      this.newPoll = { id: 0, title: '', items: [] }
+    },
+    addToListInNew() {
+      this.newPoll.items.push({ id: 10, text: 'Coloque uma opção' })
     },
     removeFromList(item) {
       let index = this.polls[0].items.indexOf(item)
