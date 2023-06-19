@@ -3,7 +3,7 @@
     <v-responsive class="align-start text-center fill-height">
       <h1 class="my-8">Adicionar uma nova poll</h1>
       <v-row class="d-flex align-start justify-start">
-        <CardHome v-for="item in getPools" id="0" />
+        <CardHome />
       </v-row>
       <h1 class="my-8">Lista das votações abertas</h1>
       <v-row class="d-flex align-start justify-start">
@@ -24,6 +24,4 @@ import { usePollStore } from '@/store/poll'
 import { storeToRefs } from 'pinia'
 
 const { getPools } = storeToRefs(usePollStore())
-const { initList } = usePollStore()
-initList()
 </script>

@@ -9,15 +9,15 @@
       ></v-text-field>
     </v-card-body>
     <h3>Preencha as opções de títulos:</h3>
-    <div class="align-center justify-center" v-for="item in list" :key="item.id">
+    <div class="align-center justify-center" v-for="item in getNewPoll.items" :key="item.id">
       <v-text-field variant="solo" :placeholder="item.text">
         <template v-slot:append>
-          <v-btn density="compact" color="#5F578D" icon="mdi-minus" @click="removeFromList(item)"></v-btn>
+          <v-btn density="compact" color="#5F578D" icon="mdi-minus" @click="removeFromListNew(item)"></v-btn>
         </template>
       </v-text-field>
     </div>
     <h3 class="text-start">
-      <v-btn class="mr-4" density="compact" color="#5F578D" icon="mdi-plus" @click="addToList()"></v-btn>
+      <v-btn class="mr-4" density="compact" color="#5F578D" icon="mdi-plus" @click="addToListInNew()"></v-btn>
       Adicionar mais
     </h3>
     <v-btn color="#5F578D">Criar</v-btn>
@@ -34,10 +34,10 @@
     id: 0
   })
 
-  const { getPools } = storeToRefs(usePollStore())
-  const list = computed(() => getPools.value[0].items)
-  const title = computed(() => getPools.value[0].title)
+  const { getNewPoll } = storeToRefs(usePollStore())
+  const list = computed(() => getNewPoll.items)
+  const title = computed(() => getNewPoll.title)
   
-  const { addToList } = usePollStore();
-  const { removeFromList } = usePollStore();
+  const { addToListInNew } = usePollStore();
+  const { removeFromListNew } = usePollStore();
 </script>

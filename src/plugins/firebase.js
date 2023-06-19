@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyB7kZuuygCL8CGte7aR3CVV0lDnk5V9yBE",
-  databaseURL: "https://progweb-1cb51.us-east1.firebaseio.com",
+  // databaseURL: "https://progweb-1cb51.us-east1.firebaseio.com",
   authDomain: "trabprogweb-583f9.firebaseapp.com",
   projectId: "trabprogweb-583f9",
   storageBucket: "trabprogweb-583f9.appspot.com",
@@ -14,9 +13,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-//initialize firebase auth
-const auth = getAuth()
-
-
-export { app, auth }
+export default app
