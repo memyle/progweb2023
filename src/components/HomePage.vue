@@ -11,12 +11,12 @@
           <VoteHome class="ma-8" id="0" :poll="item"/>
         </div>
       </v-row>
-      <h1 class="my-8">Lista das votações mais votadas (TOP 10)</h1>
+      <!-- <h1 class="my-8">Lista das votações mais votadas (TOP 10)</h1>
       <v-row class="d-flex align-start justify-start">
         <div v-for="item in getPools">
           <VoteHome class="ma-8" id="0" :poll="item"/>
         </div>
-      </v-row>
+      </v-row> -->
     </v-responsive>
   </v-container>
 </template>
