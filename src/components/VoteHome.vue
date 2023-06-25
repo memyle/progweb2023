@@ -25,5 +25,5 @@
 
   const topSelect = ref(null)
 
-  const { toggleVote } = usePollStore();
+  const { toggleVote, closePoll } = usePollStore();
 </script>

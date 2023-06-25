@@ -17,18 +17,28 @@
           <VoteHome class="ma-8" id="0" :poll="item"/>
         </div>
       </v-row> -->
+      <ul>
+        <li v-for="poll in firebasePolls" :key="poll.id">
+        <span>{{ poll.title }}</span>
+        </li>
+      </ul>
     </v-responsive>
   </v-container>
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import CardHome from './CardHome.vue';
-import VoteHome from './VoteHome.vue';
-import { usePollStore } from '@/store/poll'
-import { storeToRefs } from 'pinia'
+  import { computed } from 'vue';
+  import CardHome from './CardHome.vue';
+  import VoteHome from './VoteHome.vue';
+  import { usePollStore } from '@/store/poll'
+  import { storeToRefs } from 'pinia'
+  import { useFirestore, useCollection } from 'vuefire'
+  import { collection } from 'firebase/firestore'
 
-const { getPools } = storeToRefs(usePollStore())
-
-const polls = computed(() => getPools)
+  const { getPools } = storeToRefs(usePollStore())
+  
+  const polls = computed(() => getPools)
+  
+  const db = useFirestore()
+  const firebasePolls = useCollection(collection(db, 'polls'))
 </script>
