@@ -1,16 +1,16 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB7kZuuygCL8CGte7aR3CVV0lDnk5V9yBE",
-  // databaseURL: "https://progweb-1cb51.us-east1.firebaseio.com",
-  authDomain: "trabprogweb-583f9.firebaseapp.com",
-  projectId: "trabprogweb-583f9",
-  storageBucket: "trabprogweb-583f9.appspot.com",
-  messagingSenderId: "937650485955",
-  appId: "1:937650485955:web:8a4aeba681c17e0e0d0076",
-  measurementId: "G-XR6GPB97JK"
+  apiKey: "AIzaSyCio4M9GlqF_UrkDMRZ3YeGF6oTb4lpRyQ",
+  authDomain: "progweb-1cb51.firebaseapp.com",
+  projectId: "progweb-1cb51",
+  storageBucket: "progweb-1cb51.appspot.com",
+  messagingSenderId: "910194208066",
+  appId: "1:910194208066:web:4f9823ab3358e342cbecdb",
+  measurementId: "G-JRLS7195QV"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export default app
+export const firebaseApp = initializeApp(firebaseConfig);
+
+export default firebaseApp
