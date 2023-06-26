@@ -17,11 +17,6 @@
           <VoteHome class="ma-8" id="0" :poll="item"/>
         </div>
       </v-row> -->
-      <ul>
-        <li v-for="poll in firebasePolls" :key="poll.id">
-        <span>{{ poll.title }}</span>
-        </li>
-      </ul>
     </v-responsive>
   </v-container>
 </template>
